@@ -1,0 +1,33 @@
+IF EXISTS(SELECT * FROM SYS.PROCEDURES WHERE name = 'jHelp') BEGIN
+	DROP PROC jHelp
+END
+GO
+
+CREATE PROC jHelp @object varchar(20) = NULL
+AS
+BEGIN
+	SET @object = RTRIM(LTRIM(@object))
+	IF SUBSTRING(@object, 1, 1) != ';' BEGIN
+		SET @object = ';' + @object
+	END
+	IF SUBSTRING(@object, LEN(@object), 1) != ';' BEGIN
+		SET @object = @object + ';'
+	END
+
+	IF CHARINDEX(';SP;', @object) > 0 BEGIN
+		SELECT * FROM SYS.PROCEDURES
+	END
+	IF CHARINDEX(';SF;', @object) > 0 BEGIN
+		SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = 'FUNCTION'
+	END
+	IF CHARINDEX(';TABLE;', @object) > 0 BEGIN
+		SELECT * FROM SYS.TABLES WHERE TYPE = 'U'
+	END
+	ELSE BEGIN
+		PRINT 'JHELP ''SP'''
+		PRINT 'JHELP ''SF'''
+		PRINT 'JHELP ''TABLE'''
+		PRINT 'JHELP ''SP;SF;TABLE'''
+		RETURN
+	END
+END

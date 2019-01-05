@@ -1,0 +1,3 @@
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE name='IX_Label_Name' AND object_id = OBJECT_ID('Label')) BEGIN
+	CREATE UNIQUE NONCLUSTERED INDEX IX_Label_Name ON dbo.Label(Name ASC) ON [PRIMARY]
+END
