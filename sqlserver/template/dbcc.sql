@@ -1,0 +1,1 @@
+DBCC CHECKIDENT (Label, RESEED, 4)
