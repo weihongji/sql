@@ -1,0 +1,1 @@
+﻿EXEC sp_spaceused N'my_table_name'
